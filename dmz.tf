@@ -1,6 +1,7 @@
 resource "aws_subnet" "dmz" {
-  count = "${var.azcount}"
+#  count = "${var.azcount}"
   vpc_id = "${aws_vpc.vpc.id}"
+  count = "${var.azcount}"
   cidr_block = "${cidrsubnet(${aws_vpc.vpc.cidr_block},${data.null_data_source.my.inputs["newbits"]},$count.index+0)}"
   availability_zone = "${data.aws_availability_zones.available[$count.index]}"
   tags {
