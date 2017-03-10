@@ -7,7 +7,7 @@ resource "aws_subnet" "dmz" {
 #  availability_zone = "${data.aws_availability_zones.available[$count.index]}"
 #  cidr_block = "${cidrsubnet(${aws_vpc.vpc.cidr_block},${data.null_data_source.my.inputs["newbits"]},0)}"
   cidr_block = "${cidrsubnet(aws_vpc.vpc.cidr_block,data.null_data_source.my.inputs["newbits"],0)}"
-  availability_zone = "${data.aws_availability_zones.available[0]}"
+  availability_zone = "${data.aws_availability_zones.available.names[0]}"
   tags {
     CostCenter = "${var.costcenter}"
     Name = "${var.nameprefix}-dmz${count.index}"
