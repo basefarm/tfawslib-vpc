@@ -19,7 +19,7 @@ resource "aws_route_table" "nat" {
   }
   tags {
     CostCenter = "${var.costcenter}"
-    Name = "${var.nameprefix}-NAT$count.index"
+    Name = "${var.nameprefix}-NAT${count.index}"
   }
 }
 
