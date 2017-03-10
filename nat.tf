@@ -1,20 +1,21 @@
 resource "aws_eip" "nat" {
   count = "${var.azcount}"
   vpc      = true
-  tags {
-    CostCenter = "${var.costcenter}"
-    Name = "${var.nameprefix}"
-  }
+#  tags {
+#    CostCenter = "${var.costcenter}"
+#    Name = "${var.nameprefix}"
+#  }
 }
 
 resource "aws_nat_gateway" "natgw" {
   count = "${var.azcount}"
   subnet_id = "${element(aws_subnet.dmz.*.id, count.index)}"
   allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
-  tags {
-    CostCenter = "${var.costcenter}"
-    Name = "${var.nameprefix}"
-  }
+  depends_on = ["aws_internet_gateway.igw"]
+#  tags {
+#    CostCenter = "${var.costcenter}"
+#    Name = "${var.nameprefix}"
+#  }
 }
 
 resource "aws_route_table" "nat" {
