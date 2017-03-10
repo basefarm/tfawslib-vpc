@@ -1,6 +1,7 @@
 #variable "" { default= type="string" }
 variable "region" { type="string" }
 variable "costcenter" { type="string" }
+variable "nameprefix" { type="string" }
 variable "netaddr" { default="10.0.0.0" type="string" }
 variable "netsize" { default="24" type="string" }
 variable "azcount" { default="3" type="string" }
@@ -18,6 +19,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   tags {
     CostCenter = "${var.costcenter}"
+    Name = "${nameprefix}"
   }
 }
 
