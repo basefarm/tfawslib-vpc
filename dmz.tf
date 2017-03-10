@@ -17,7 +17,7 @@ resource "aws_subnet" "dmz" {
 
 resource "aws_route_table_association" "dmz" {
   count = "${var.azcount}"
-  subnet_id = "${aws_subnet.dmz.$count.index.id}"
+  subnet_id = "${element(aws_subnet.dmz.*.id, count.index)}"
   route_table_id = "${aws_route_table.public.id}"
 }
 
