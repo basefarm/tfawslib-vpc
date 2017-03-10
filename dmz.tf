@@ -21,4 +21,4 @@ resource "aws_route_table_association" "dmz" {
   route_table_id = "${aws_route_table.public.id}"
 }
 
-output "dmznets" { value = "[${aws_subnet.dmz.*.id}]" }
+output "dmznets" { value = "${list(aws_subnet.dmz.*.id)}" }
