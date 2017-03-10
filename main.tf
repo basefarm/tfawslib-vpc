@@ -8,9 +8,11 @@ variable "azcount" { default="3" type="string" }
 
 data "null_data_source" "my" {
   inputs = {
-    subsize = "${max( 22, min(var.netsize+4, 28))}"
+    newbits = "${max( 22, min(var.netsize+4, 28))-var.netsize}"
   }
 }
 
+data "aws_availability_zones" "available" {}
 
-output "subsize" { value = "${data.null_data_source.my.inputs["subsize"] }" }
+
+output "newbits" { value = "${data.null_data_source.my.inputs["newbits"] }" }
