@@ -19,7 +19,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   tags {
     CostCenter = "${var.costcenter}"
-    Name = "${nameprefix}"
+    Name = "${var.nameprefix}"
   }
 }
 
