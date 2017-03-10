@@ -20,6 +20,10 @@ resource "aws_nat_gateway" "natgw" {
 resource "aws_route_table" "nat" {
   count = "${var.azcount}"
   vpc_id = "${aws_vpc.vpc.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${element(aws_internet_gateway.igw.id, count.index)}"
+  }
   tags {
     CostCenter = "${var.costcenter}"
     Name = "${var.nameprefix}"
