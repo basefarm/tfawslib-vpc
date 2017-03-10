@@ -8,8 +8,8 @@ variable "azcount" { default="3" type="string" }
 
 data "null_data_source" "my" {
   inputs = {
-    newbits = "${max(2, max( 22, min(var.netsize+4, 28))-var.netsize})"
-    
+    newbits = "${max(1 , max( 22 , min(var.netsize + 4 , 28)) - var.netsize)}"
+    azs = "${length( data.aws_availability_zones.available.names)}"
   }
 }
 
@@ -17,3 +17,5 @@ data "aws_availability_zones" "available" {}
 
 
 output "newbits" { value = "${data.null_data_source.my.inputs["newbits"] }" }
+output "azs" { value = "${data.null_data_source.my.inputs["azs"] }" }
+
