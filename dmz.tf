@@ -1,5 +1,5 @@
 resource "aws_subnet" "dmz" {
-  count = "${var.azcount}"
+  count = "${data.null_data_source.my.inputs["azcount"] }"
   vpc_id = "${aws_vpc.vpc.id}"
   map_public_ip_on_launch = false
   cidr_block = "${cidrsubnet(aws_vpc.vpc.cidr_block,data.null_data_source.my.inputs["newbits"],count.index + 0)}"
@@ -11,7 +11,7 @@ resource "aws_subnet" "dmz" {
 }
 
 resource "aws_route_table_association" "dmz" {
-  count = "${var.azcount}"
+  count = "${data.null_data_source.my.inputs["azcount"] }"
   subnet_id = "${element(aws_subnet.dmz.*.id, count.index)}"
   route_table_id = "${aws_route_table.public.id}"
 }
