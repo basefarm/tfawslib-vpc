@@ -20,6 +20,7 @@ resource "aws_route_table" "nat" {
   tags {
     CostCenter = "${var.costcenter}"
     Name = "${var.nameprefix}-NAT${count.index}"
+    AZ = "${element(split(",",data.null_data_source.my.inputs["azlist"]), count.index)}"
   }
 }
 

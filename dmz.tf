@@ -8,6 +8,7 @@ resource "aws_subnet" "dmz" {
   tags {
     CostCenter = "${var.costcenter}"
     Name = "${var.nameprefix}-DMZ${count.index}"
+    AZ = "${element(split(",",data.null_data_source.my.inputs["azlist"]), count.index)}"
   }
 }
 
