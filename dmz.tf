@@ -3,7 +3,8 @@ resource "aws_subnet" "dmz" {
   vpc_id = "${aws_vpc.vpc.id}"
   map_public_ip_on_launch = false
   cidr_block = "${cidrsubnet(aws_vpc.vpc.cidr_block,data.null_data_source.my.inputs["newbits"],count.index + 0)}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+#  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  availability_zone = "${element(split(",",data.null_data_source.my.inputs["azlist"]), count.index)}"
   tags {
     CostCenter = "${var.costcenter}"
     Name = "${var.nameprefix}-DMZ${count.index}"
