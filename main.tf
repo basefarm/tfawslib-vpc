@@ -20,5 +20,5 @@ data "aws_availability_zones" "available" {}
 output "newbits" { value = "${data.null_data_source.my.inputs["newbits"] }" }
 output "azcount" { value = "${data.null_data_source.my.inputs["azcount"] }" }
 
-output "azlist" { value = "${list(split(",",data.null_data_source.my.inputs["azlistt"]))}"
+output "azlist" { value = "${list(split(",",data.null_data_source.my.inputs["azlistt"]))}" }
 
