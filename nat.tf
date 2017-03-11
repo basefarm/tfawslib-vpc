@@ -1,17 +1,17 @@
 resource "aws_eip" "nat" {
-  count = "${var.azcount}"
+  count = "${data.null_data_source.my.inputs["azcount"] }"
   vpc      = true
 }
 
 resource "aws_nat_gateway" "natgw" {
-  count = "${var.azcount}"
+  count = "${data.null_data_source.my.inputs["azcount"] }"
   subnet_id = "${element(aws_subnet.dmz.*.id, count.index)}"
   allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
   depends_on = ["aws_internet_gateway.igw"]
 }
 
 resource "aws_route_table" "nat" {
-  count = "${var.azcount}"
+  count = "${data.null_data_source.my.inputs["azcount"] }"
   vpc_id = "${aws_vpc.vpc.id}"
   route {
     cidr_block = "0.0.0.0/0"
