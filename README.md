@@ -19,3 +19,23 @@ Terraform module implementing standardized VPC
 + "nat_routing_tables" - list of routing tables for internet access through NAT gateways  
 + "nat_public_ips" - public IP addresses associated with NAT gateways  
 + "vpcid" - ID of the VPC created  
+
+## Example:
+module "vpc" {  
+  source = "git@github.com:basefarm/tfawslib-vpc"  
+  region = "${var.region}"  
+  costcenter = "${var.costcenter}"  
+  nameprefix = "${var.nameprefix}"  
+  netsize = 23  
+  netaddr = "172.26.16.0"  
+  azs = 2  
+}  
+  
+output "VPC ID" { value = "${module.vpc.vpcid}" }  
+output "AZ Count" { value = "${module.vpc.azcount}" }  
+output "AZ List" { value = "${module.vpc.azlist}" }  
+output "Public Route Table" { value = "${module.vpc.pubrt}" }  
+output "DMZ Networks" { value = "${module.vpc.dmznets}" }  
+output "NAT Routing Tables" { value = "${module.vpc.nat_routing_tables}" }  
+output "NATGW Public IPs" { value = "${module.vpc.nat_public_ips}" }  
+  
