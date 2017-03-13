@@ -21,6 +21,10 @@ Terraform module implementing standardized VPC
 + "vpcid" - ID of the VPC created  
 
 ## Example:
+variable "region" { default="eu-west-1" }  
+variable "costcenter" { default="MyLab" }  
+variable "nameprefix" { default="MyTest" }  
+  
 module "vpc" {  
   source = "git@github.com:basefarm/tfawslib-vpc"  
   region = "${var.region}"  
