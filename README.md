@@ -21,13 +21,13 @@ Terraform module implementing standardized VPC
 + "vpcid" - ID of the VPC created  
 
 ## Example:
+
+
+```hcl
 variable "region" { default="eu-west-1" }  
 variable "costcenter" { default="MyLab" }  
 variable "nameprefix" { default="MyTest" }  
-  
-
-```hcl
-module "vpc" {    source = "git@github.com:basefarm/tfawslib-vpc"  
+  module "vpc" {    source = "git@github.com:basefarm/tfawslib-vpc"  
   region = "${var.region}"  
   costcenter = "${var.costcenter}"  
   nameprefix = "${var.nameprefix}"  
@@ -35,9 +35,6 @@ module "vpc" {    source = "git@github.com:basefarm/tfawslib-vpc"
   netaddr = "172.26.16.0"  
   azs = 2  
 }
-```
-  
-  
 output "VPC ID" { value = "${module.vpc.vpcid}" }  
 output "AZ Count" { value = "${module.vpc.azcount}" }  
 output "AZ List" { value = "${module.vpc.azlist}" }  
@@ -45,4 +42,8 @@ output "Public Route Table" { value = "${module.vpc.pubrt}" }
 output "DMZ Networks" { value = "${module.vpc.dmznets}" }  
 output "NAT Routing Tables" { value = "${module.vpc.nat_routing_tables}" }  
 output "NATGW Public IPs" { value = "${module.vpc.nat_public_ips}" }  
+```
+  
+  
+
   
