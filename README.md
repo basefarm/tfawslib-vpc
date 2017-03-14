@@ -26,13 +26,13 @@ variable "costcenter" { default="MyLab" }
 variable "nameprefix" { default="MyTest" }  
   
 module "vpc" {  
-  source = "git@github.com:basefarm/tfawslib-vpc"  
-  region = "${var.region}"  
-  costcenter = "${var.costcenter}"  
-  nameprefix = "${var.nameprefix}"  
-  netsize = 23  
-  netaddr = "172.26.16.0"  
-  azs = 2  
+    source = "git@github.com:basefarm/tfawslib-vpc"  
+    region = "${var.region}"  
+    costcenter = "${var.costcenter}"  
+    nameprefix = "${var.nameprefix}"  
+    netsize = 23  
+    netaddr = "172.26.16.0"  
+    azs = 2  
 }  
   
 output "VPC ID" { value = "${module.vpc.vpcid}" }  
