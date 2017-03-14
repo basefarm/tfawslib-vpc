@@ -27,7 +27,7 @@ Terraform module implementing standardized VPC
 variable "region" { default="eu-west-1" }  
 variable "costcenter" { default="MyLab" }  
 variable "nameprefix" { default="MyTest" }  
-  module "vpc" {    source = "git@github.com:basefarm/tfawslib-vpc"  
+module "vpc" {    source = "git@github.com:basefarm/tfawslib-vpc"  
   region = "${var.region}"  
   costcenter = "${var.costcenter}"  
   nameprefix = "${var.nameprefix}"  
