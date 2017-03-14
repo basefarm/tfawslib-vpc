@@ -25,17 +25,18 @@ variable "region" { default="eu-west-1" }
 variable "costcenter" { default="MyLab" }  
 variable "nameprefix" { default="MyTest" }  
   
-module "vpc" {  
+
 ```hcl
-  source = "git@github.com:basefarm/tfawslib-vpc"  
+module "vpc" {    source = "git@github.com:basefarm/tfawslib-vpc"  
   region = "${var.region}"  
   costcenter = "${var.costcenter}"  
   nameprefix = "${var.nameprefix}"  
   netsize = 23  
   netaddr = "172.26.16.0"  
   azs = 2  
+}
 ```
-}  
+  
   
 output "VPC ID" { value = "${module.vpc.vpcid}" }  
 output "AZ Count" { value = "${module.vpc.azcount}" }  
