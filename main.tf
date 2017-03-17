@@ -2,6 +2,14 @@
 variable "region" { default="eu-west-1" type="string" }
 variable "costcenter" { type="string" }
 variable "nameprefix" { type="string" }
+variable "sshkey" { type="string" }
+variable "datadog_apikey" { type="string" }
+
+variable "jumphost_ssh_access_cidrs" {
+    type = "list"
+    default = ["80.76.159.9/32","89.250.119.178/32","195.225.18.0/23"]
+}
+variable "jumphost_cloudconfig" { default="" type="string" }
 
 variable "netaddr" { default="10.0.0.0" type="string" }
 variable "netsize" { default="24" type="string" }
@@ -9,6 +17,7 @@ variable "dmzbitz" { default="0" type="string" }
 variable "appbitz" { default="0" type="string" }
 variable "appnetnumoffsetz" { default="0" type="string" }
 variable "appnetflag" { default="true" type="string" }
+variable "use_jumphost" { default="true" type="string" }
 
 
 variable "azs" { default="3" type="string" }
@@ -31,6 +40,15 @@ data "null_data_source" "my" {
 data "aws_availability_zones" "available" {}
 
 data "aws_caller_identity" "current" { }
+
+data "aws_ami" "bf_rhel7_ebs" {
+  most_recent = true
+  owners = ["054714998694"]
+  filter {
+    name = "name"
+    values = ["bf-rhel-7*"]
+  }
+}
 
 
 output "dmzbits" { value = "${data.null_data_source.my.inputs["dmzbits"] }" }

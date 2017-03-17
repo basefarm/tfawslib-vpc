@@ -4,6 +4,8 @@ Terraform module implementing standardized VPC
 ## Required Inputs:  
 + variable "costcenter" { type="string" } - tag for CostCenter showback
 + variable "nameprefix" { type="string" } - prefix for naming related ressources
++ variable "ssh_key" { type="string" } - SSH Key for login to instances
++ variable "datadog_api_key" { type="string" } - API key for registering instances in Datadog account
 
 ## Optional Inputs:
 + variable "region" { default="eu-west-1" type="string" } - AWS Region
@@ -13,11 +15,13 @@ Terraform module implementing standardized VPC
 + variable "appnetflag" { default="true" type="string" } - Determines if App networks should be created
 + variable "intdns" { default=true type="string" } - Determines if Private DNS should be used
 + variable "intdnszone" { default="" type="string" } - Overrides the default zonename for private DNS
++ variable "use_jumphost" { default="true" type="string" } - Set this to "false" if you don't want to deploy a jumphost
 
 ## Additional inputs available for tweaking in special cases:
 + variable "dmzbitz" { default="0" type="string" } - Additional subnetmask bits for determining DMZ networks sizes
 + variable "appbitz" { default="0" type="string" } - Additional subnetmask bits for determining App networks sizes
 + variable "appnetnumoffsetz" { default="0" type="string" } - The number of App net subnets to be skipped due to DMZ subnets
++ variable jumphost_cloudconfig = "${data.template_file.jumphost_cloud_config.rendered}" - Allows you to override the default cloud_config script
 
 
 
@@ -33,6 +37,7 @@ Terraform module implementing standardized VPC
 + "nat_public_ips" - public IP addresses associated with NAT gateways  
 + "vpcid" - ID of the VPC created  
 + "region" - AWS Region
++ "jumphost_eip" - Elastic IP assigned to jumphost
 + "internal_dns_zoneid" - ID for Route53 Zone used for internal DNS
 + "internal_dns_zonename" - Zone name used for internal DNS
 
