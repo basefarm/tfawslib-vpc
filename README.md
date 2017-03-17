@@ -60,7 +60,7 @@ provider "aws" {
 }
 
 module "vpc" {  
-  source = "git@github.com:basefarm/tfawslib-vpc"  
+  source = "git@github.com:basefarm/tfawslib-vpc?ref=0.6"  
   costcenter = "${var.costcenter}"  
   nameprefix = "${var.nameprefix}"  
   datadog_apikey = "${var.datadog_api_key}"
