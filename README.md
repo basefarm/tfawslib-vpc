@@ -42,23 +42,29 @@ Terraform module implementing standardized VPC
 + "internal_dns_zonename" - Zone name used for internal DNS
 
 
-## Example:
+## Example that can be deployed Basefarm's AWSLab account:
 ```hcl
 variable "costcenter" { default="MyLab" }  
 variable "nameprefix" { default="MyTest" }  
+variable "ssh_key" { default="bf-awslabs_rsa" type="string" }
+variable "datadog_api_key" { default = "7e72f0eed2dc28ff948d25a445b56675" type="string" }
+
   
 terraform {
   required_version = ">= 0.9.0"
 }
 
 provider "aws" {
-    region = "${module.vpc.region}"
+  region = "${module.vpc.region}"
+  allowed_account_ids = ["552687213402"]
 }
 
 module "vpc" {  
   source = "git@github.com:basefarm/tfawslib-vpc"  
   costcenter = "${var.costcenter}"  
   nameprefix = "${var.nameprefix}"  
+  datadog_apikey = "${var.datadog_api_key}"
+  sshkey = "${var.ssh_key}"
 }
 
 output "VPC Region" { value = "${module.vpc.region}" }
@@ -70,6 +76,7 @@ output "Application Networks" { value = "${module.vpc.appnets}" }
 output "NATGW Public IPs" { value = "${module.vpc.nat_public_ips}" }
 output "Internal DNS Zone Name" { value ="${module.vpc.internal_dns_zonename}" }
 output "Internal DNS Zone ID" { value ="${module.vpc.internal_dns_zoneid}" }
+output "Jumphost Public IP" { value = "${module.vpc.jumphost_eip}" }
   
 ```
 This creates a VPC called "MyLab" in the EU-West-1 region with IP Range 10.0.0.0/24, containing 3 /28 DMZ networks with direct Internet access and 3 /26 App networks with Internet access through 2 NAT gateways.
