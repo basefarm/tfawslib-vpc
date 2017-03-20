@@ -57,6 +57,6 @@ output "appnetnumoffset" { value = "${data.null_data_source.my.inputs["appnetnum
 output "azcount" { value = "${data.null_data_source.my.inputs["azcount"] }" }
 
 #output "azlist" { value = "${list(split(",",data.null_data_source.my.inputs["azlist"]))}" }
-output "azlist" { value = "${split(",",data.null_data_source.my.inputs["azlist"])}" }
+output "azlist" { value = ["${split(",",data.null_data_source.my.inputs["azlist"])}"] }
 output "region" { value = "${var.region}" }
 

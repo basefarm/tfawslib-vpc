@@ -17,4 +17,4 @@ resource "aws_route_table_association" "appnet" {
   route_table_id = "${element(aws_route_table.nat.*.id, min(2, count.index) )}"
 }
 
-output "appnets" { value = "${list(aws_subnet.appnet.*.id)}" }
+output "appnets" { value = ["${aws_subnet.appnet.*.id}"] }

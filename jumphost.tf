@@ -83,8 +83,9 @@ resource "aws_security_group_rule" "jumphost_inbound_01" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = "${var.jumphost_ssh_access_cidrs}"
+  cidr_blocks       = ["${var.jumphost_ssh_access_cidrs}"]
   security_group_id = "${aws_security_group.jumphost_inbound.id}"
 }
 
 output "jumphost_eip" { value = "${aws_eip.jumphost.public_ip}" }
+output "jumphost_sg" { value = "${aws_security_group.jumphost_accessible.id}" }

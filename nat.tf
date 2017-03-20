@@ -33,7 +33,7 @@ resource "aws_route53_record" "nat" {
    records = ["${element(aws_nat_gateway.natgw.*.private_ip, count.index)}"]
 }
 
-output "nat_routing_tables" { value = "${list(aws_route_table.nat.*.id)}" }
-output "nat_public_ips" { value = "${list(aws_eip.nat.*.public_ip)}" }
-output "nat_internal_hostnames" { value = "${list(aws_route53_record.nat.*.name)}" }
+output "nat_routing_tables" { value = ["${aws_route_table.nat.*.id}"] }
+output "nat_public_ips" { value = ["${aws_eip.nat.*.public_ip}"] }
+output "nat_internal_hostnames" { value = ["${aws_route53_record.nat.*.name}"] }
 

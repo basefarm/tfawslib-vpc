@@ -42,3 +42,5 @@ resource "aws_security_group_rule" "allow_inbound_http_https_02" {
   cidr_blocks     = ["0.0.0.0/0"]
 }
 
+output "secgroup_egress" { value = "${aws_security_group.unrestricted_egress.id}" }
+output "secgroup_inbound_http_https" { value = "${aws_security_group.allow_inbound_http_https.id}" }
