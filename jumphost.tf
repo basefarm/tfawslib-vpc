@@ -87,5 +87,14 @@ resource "aws_security_group_rule" "jumphost_inbound_01" {
   security_group_id = "${aws_security_group.jumphost_inbound.id}"
 }
 
+resource "aws_route53_record" "nat" {
+  count = "${var.intdns ? var.use_jumphost == "true" ? 1 : 0 : 0 }"
+   zone_id = "${aws_route53_zone.internal.zone_id}"
+   name = "jumphost.${aws_route53_zone.internal.name}"
+   type = "A"
+   ttl = "300"
+   records = ["${element(aws_nat_gateway.natgw.*.private_ip, count.index)}"]
+}
+
 output "jumphost_eip" { value = "${aws_eip.jumphost.public_ip}" }
 output "jumphost_sg" { value = "${aws_security_group.jumphost_accessible.id}" }
