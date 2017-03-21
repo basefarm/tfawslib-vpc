@@ -42,5 +42,44 @@ resource "aws_security_group_rule" "allow_inbound_http_https_02" {
   cidr_blocks     = ["0.0.0.0/0"]
 }
 
+resource "aws_security_group" "db" {
+  name        = "db"
+  description = "Access group for database servers"
+  vpc_id = "${aws_vpc.vpc.id}"
+  tags {
+    CostCenter = "${var.costcenter}"
+    Name = "${var.nameprefix}_db"
+  }
+}
+resource "aws_security_group" "db_access" {
+  name        = "db_access"
+  description = "Access group for giving access to database servers"
+  vpc_id = "${aws_vpc.vpc.id}"
+  tags {
+    CostCenter = "${var.costcenter}"
+    Name = "${var.nameprefix}_db_access"
+  }
+}
+resource "aws_security_group_rule" "db_01" {
+  count = "${length(var.dbports)}"
+  security_group_id = "${aws_security_group.db.id}"
+  type            = "ingress"
+  from_port       = "${var.dbports[count.index]}"
+  to_port         = "${var.dbports[count.index]}"
+  protocol        = "tcp"
+  source_security_group_id = "${aws_security_group.db_access.id}"
+}
+resource "aws_security_group_rule" "db_access_01" {
+  count = "${length(var.dbports)}"
+  security_group_id = "${aws_security_group.db_access.id}"
+  type            = "egress"
+  from_port       = "${var.dbports[count.index]}"
+  to_port         = "${var.dbports[count.index]}"
+  protocol        = "tcp"
+  source_security_group_id = "${aws_security_group.db.id}"
+}
+  
+output "secgroup_db" { value = "${aws_security_group.db.id}" }
+output "secgroup_db_access" { value = "${aws_security_group.db_access.id}" }
 output "secgroup_egress" { value = "${aws_security_group.unrestricted_egress.id}" }
 output "secgroup_inbound_http_https" { value = "${aws_security_group.allow_inbound_http_https.id}" }

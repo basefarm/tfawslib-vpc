@@ -10,7 +10,7 @@ variable "jumphost_ssh_access_cidrs" {
     default = ["80.76.159.9/32","89.250.119.178/32","195.225.18.0/23"]
 }
 variable "jumphost_cloudconfig" { default="" type="string" }
-
+variable "dbports" { default = [ "3389" ] }
 variable "netaddr" { default="10.0.0.0" type="string" }
 variable "netsize" { default="24" type="string" }
 variable "dmzbitz" { default="0" type="string" }

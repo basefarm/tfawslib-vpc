@@ -16,6 +16,7 @@ Terraform module implementing standardized VPC
 + variable "intdns" { default=true type="string" } - Determines if Private DNS should be used
 + variable "intdnszone" { default="" type="string" } - Overrides the default zonename for private DNS
 + variable "use_jumphost" { default="true" type="string" } - Set this to "false" if you don't want to deploy a jumphost
++ variable "dbports" { default = ["3389"] type="list" } - List of ports for DB and DB Access security groups
 
 ## Additional inputs available for tweaking in special cases:
 + variable "dmzbitz" { default="0" type="string" } - Additional subnetmask bits for determining DMZ networks sizes
@@ -30,7 +31,8 @@ Terraform module implementing standardized VPC
 + "appnets" - list of subnet ID's for Application networks  
 + "igwid" - ID for Internet Gateway  
 + "pubrt" - ID for routing table with direct internet access  
-+ "newbits" - additional bits in subnet network mask  
++ "appbits" - additional bits in App subnet network mask  
++ "dmzbits" - additional bits in DMZ subnet network mask  
 + "azcount" - adjusted number of availability zones used  
 + "azlist" - list of names of the availability zones used  
 + "nat_routing_tables" - list of routing tables for internet access through NAT gateways  
@@ -40,7 +42,10 @@ Terraform module implementing standardized VPC
 + "jumphost_eip" - Elastic IP assigned to jumphost
 + "internal_dns_zoneid" - ID for Route53 Zone used for internal DNS
 + "internal_dns_zonename" - Zone name used for internal DNS
-
++ "secgroup_egress" - Security Group allowing unrestricted Outbound traffic
++ "secgroup_inbound_http_https" - Security Group allowing global access on ports 80 and 443
++ "secgroup_db" - Security group for DB servers, granting access from secgroup_db_Access
++ "secgroup_db_access" - Security group for granting access to DB servers
 
 ## Example that can be deployed Basefarm's AWSLab account:
 ```hcl
