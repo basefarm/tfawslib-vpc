@@ -18,3 +18,4 @@ resource "aws_route_table_association" "appnet" {
 }
 
 output "appnets" { value = ["${aws_subnet.appnet.*.id}"] }
+output "appnetcount" { value = "${length(aws_subnet.appnet.id)}" }
